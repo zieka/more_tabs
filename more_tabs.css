@@ -1,0 +1,5 @@
+.nav-tabs-more {
+  overflow-y: visible;
+  overflow-x: hidden;  /*TODO: after initialization this can be removed*/
+  display: -webkit-box;
+}

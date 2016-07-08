@@ -4,7 +4,7 @@ function TabOverflow() {
     if ($('.nav-tabs-more>li').not('.more-tab').length != 0) {
         var LastTabWidth = $('.nav-tabs-more>li').not('.more-tab').last().width();
         var LastTabPosition = $('.nav-tabs-more>li').not('.more-tab').last().position().left;
-        var threshold = 100;
+        var threshold = 0;
     } else {
         var LastTabWidth = 1;
         var LastTabPosition = 1;
@@ -12,11 +12,11 @@ function TabOverflow() {
     }
 
     // If there is overflow lets move the overflowing tab to the more dropdown
-    if ((LastTabWidth + LastTabPosition + threshold) >= screen.width) {
+    if ((2*LastTabWidth + LastTabPosition + threshold) >= screen.width) {
         movetoMore($('.nav-tabs-more>li').not('.more-tab').last());
     }
     // If there is enough room for a tab lets move the menu item back to the tabs list
-    if (2 * LastTabWidth + LastTabPosition + threshold < screen.width) {
+    if (3*LastTabWidth + LastTabPosition + threshold < screen.width) {
         movetoTabs($('.more-tab-menu>li').first());
     }
     if ($('.more-tab-menu>li').length == 0) {
@@ -33,8 +33,10 @@ function movetoTabs(elem) {
 }
 
 function hide(elem) {
-    //TODO:check if hide class exists first
-    elem.addClass('hide')
+    //unless hide class exists add
+    if (!(elem.hasClass('hide'))) {
+      elem.addClass('hide')
+    }
 }
 
 function show(elem) {
@@ -43,7 +45,8 @@ function show(elem) {
 
 (function() {
   //TODO: need to have iife to set initial configuration
-    'use strict';
+  // Can iterate through the height of the last non more tab
+
 }());
 
 
@@ -58,5 +61,5 @@ function show(elem) {
     }, 50);
 }());
 
-
+//TODO:on width change close more menu
 $(window).bind('widthchange', TabOverflow);
