@@ -6,8 +6,9 @@ function TabOverflow() {
         var LastTabPosition = $('.nav-tabs-more>li').not('.more-tab').last().position().left;
         var threshold = 100;
     } else {
-        var LastTabWidth = 0;
-        var LastTabPosition = 0;
+        var LastTabWidth = 1;
+        var LastTabPosition = 1;
+        var threshold = 100;
     }
 
     // If there is overflow lets move the overflowing tab to the more dropdown
@@ -40,8 +41,8 @@ function show(elem) {
     elem.removeClass('hide')
 }
 
-//TODO: need to have initial iife to set initial configuration
 (function() {
+  //TODO: need to have iife to set initial configuration
     'use strict';
 }());
 
