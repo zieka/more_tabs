@@ -1,5 +1,15 @@
 .nav-tabs-more {
-  overflow-y: visible;
-  overflow-x: hidden;  /*TODO: after initialization this can be removed*/
-  display: -webkit-box;
+    overflow-y: visible;
+    overflow-x: hidden;
+    /*TODO: after initialization this can be removed*/
+    display: -webkit-box;
+}
+.more-tab>a.dropdown-toggle {
+    background-color: transparent;
+}
+.more-tab-menu {
+    z-index: 2000;
+    position: absolute;
+    right: 0;
+    left: auto;
 }
