@@ -1,33 +1,35 @@
 // Test if last nav tab is overflowing
 function isTabOverflow() {
-    var LastTabWidth = $('.tabs-more>li[class!="hide"]').not('.tabs-more-dropdown').last().width();
-    var LastTabPosition = $('.tabs-more>li[class!="hide"]').not('.tabs-more-dropdown').last().position().left;
+    var LastTabWidth = $('.nav-tabs-more>li[class!="hide"]').not('.more-tab').last().width();
+    var LastTabPosition = $('.nav-tabs-more>li[class!="hide"]').not('.more-tab').last().position().left;
     var threshold = 0;
 
-    if ((LastTabWidth +LastTabPosition + threshold) >= screen.width) {
+    // If there is overflow lets move the overflowing tab to the more dropdown
+    if ((LastTabWidth + LastTabPosition + threshold) >= screen.width) {
         console.log("overflow");
-        // Does more tab exist
-          // If more tab does not exist add it and hide 2 tabs
-            // unshift 2 tabs to the dropdown on more tab
-          // If more tabe exists pop 1 tab
-            // unshift 1 tab to dropdown
-        hide($('.tabs-more>li[class!="hide"]').not('.tabs-more-dropdown').last());
-        show($('.tabs-more-dropdown'));
+        movetoMore($('.nav-tabs-more>li').not('.more-tab').last());
     }
+    // If there is enough room for a tab lets move the menu item back to the tabs list
     if (LastTabPosition <= screen.width) {
         console.log("no overflow");
+        movetoTabs($('.more-tab-menu>li').first());
+    }
 
-
-        show($('.tabs-more>li[class="hide"]').not('.tabs-more-dropdown').first());
+    if ($('.more-tab-menu>li').length == 0) {
+        hide($('.more-tab'));
     }
 };
 
-function hide(elem) {
-    elem.addClass('hide')
+function movetoMore(elem) {
+    $('.more-tab-menu').prepend(elem); //move item to begining
 }
 
-function show(elem) {
-    elem.removeClass('hide')
+function movetoTabs(elem) {
+    $('.more-tab').before(elem); //move item before the more tab
+}
+
+function hide(elem) {
+    elem.addClass('hide')
 }
 
 // annoymous iife to check if screen has changed
