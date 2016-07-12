@@ -1,35 +1,41 @@
 function TabOverflow() {
     show($('.more-tab'));
+    var TabsWidth = $(".nav-tabs-more").width();
+    var threshold = 5;
 
     if ($('.nav-tabs-more>li').not('.more-tab').length != 0) {
         var LastTabWidth = $('.nav-tabs-more>li').not('.more-tab').last().width();
         var LastTabPosition = $('.nav-tabs-more>li').not('.more-tab').last().position().left;
-        var threshold = 0;
     } else {
         var LastTabWidth = 1;
         var LastTabPosition = 1;
-        var threshold = 100;
     }
 
     // If there is overflow lets move the overflowing tab to the more dropdown
-    if ((2*LastTabWidth + LastTabPosition + threshold) >= screen.width) {
-        movetoMore($('.nav-tabs-more>li').not('.more-tab').last());
+    if ((1.5*LastTabWidth + LastTabPosition + threshold) >= TabsWidth) {
+        movetoMore();
+        TabOverflow();
     }
     // If there is enough room for a tab lets move the menu item back to the tabs list
-    if (3*LastTabWidth + LastTabPosition + threshold < screen.width) {
-        movetoTabs($('.more-tab-menu>li').first());
+    if ($('.more-tab-menu>li').length == 1) {
+      if ((LastTabWidth + LastTabPosition + threshold) < TabsWidth) {
+          movetoTabs();
+      }
+    }
+    if ((3*LastTabWidth + LastTabPosition + threshold) < TabsWidth) {
+        movetoTabs();
     }
     if ($('.more-tab-menu>li').length == 0) {
         hide($('.more-tab'));
     }
 };
 
-function movetoMore(elem) {
-    $('.more-tab-menu').prepend(elem); //move item to begining
+function movetoMore() {
+    $('.more-tab-menu').prepend($('.nav-tabs-more>li').not('.more-tab').last()); //move item to begining
 }
 
 function movetoTabs(elem) {
-    $('.more-tab').before(elem); //move item before the more tab
+    $('.more-tab').before($('.more-tab-menu>li').first()); //move item before the more tab
 }
 
 function hide(elem) {
