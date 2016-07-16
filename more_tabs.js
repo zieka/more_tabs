@@ -1,7 +1,8 @@
 function TabOverflow() {
     show($('.more-tab'));
+
     var TabsWidth = $(".nav-tabs-more").width();
-    var threshold = 5;
+    var threshold = 5; //for tunable purposes
 
     if ($('.nav-tabs-more>li').not('.more-tab').length != 0) {
         var LastTabWidth = $('.nav-tabs-more>li').not('.more-tab').last().width();
@@ -12,17 +13,17 @@ function TabOverflow() {
     }
 
     // If there is overflow lets move the overflowing tab to the more dropdown
-    if ((1.5*LastTabWidth + LastTabPosition + threshold) >= TabsWidth) {
+    if ((1.5 * LastTabWidth + LastTabPosition + threshold) >= TabsWidth) {
         movetoMore();
         TabOverflow();
     }
     // If there is enough room for a tab lets move the menu item back to the tabs list
     if ($('.more-tab-menu>li').length == 1) {
-      if ((LastTabWidth + LastTabPosition + threshold) < TabsWidth) {
-          movetoTabs();
-      }
+        if ((LastTabWidth + LastTabPosition + threshold) < TabsWidth) {
+            movetoTabs();
+        }
     }
-    if ((3*LastTabWidth + LastTabPosition + threshold) < TabsWidth) {
+    if ((3 * LastTabWidth + LastTabPosition + threshold) < TabsWidth) {
         movetoTabs();
     }
     if ($('.more-tab-menu>li').length == 0) {
@@ -30,18 +31,20 @@ function TabOverflow() {
     }
 };
 
+//move item to the top of the more tab list
 function movetoMore() {
-    $('.more-tab-menu').prepend($('.nav-tabs-more>li').not('.more-tab').last()); //move item to begining
+    $('.more-tab-menu').prepend($('.nav-tabs-more>li').not('.more-tab').last());
 }
 
+//move item to the left of the more tab
 function movetoTabs(elem) {
-    $('.more-tab').before($('.more-tab-menu>li').first()); //move item before the more tab
+    $('.more-tab').before($('.more-tab-menu>li').first());
 }
 
 function hide(elem) {
     //unless hide class exists add
     if (!(elem.hasClass('hide'))) {
-      elem.addClass('hide')
+        elem.addClass('hide')
     }
 }
 
@@ -49,14 +52,13 @@ function show(elem) {
     elem.removeClass('hide')
 }
 
-(function() {
-  //TODO: need to have iife to set initial configuration
-  // Can iterate through the height of the last non more tab
-
+// iife to run on initial load
+(function($) {
+    TabOverflow();
 }());
 
 
-// iife to check if screen has changed
+// iife to check if screen has changed and if so trigger an event
 (function() {
     var width = screen.width;
     setInterval(function() {
@@ -67,5 +69,5 @@ function show(elem) {
     }, 50);
 }());
 
-//TODO:on width change close more menu
+// execute the Taboverflow on window width change event
 $(window).bind('widthchange', TabOverflow);
