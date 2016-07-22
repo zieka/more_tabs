@@ -12,6 +12,8 @@ function TabOverflow() {
         var LastTabPosition = 1;
     }
 
+    console.log(1.5 * LastTabWidth + " + " + LastTabPosition + " + " + threshold + " ?= " + TabsWidth);
+
     // If there is overflow lets move the overflowing tab to the more dropdown
     if ((1.5 * LastTabWidth + LastTabPosition + threshold) >= TabsWidth) {
         movetoMore();
@@ -19,11 +21,11 @@ function TabOverflow() {
     }
     // If there is enough room for a tab lets move the menu item back to the tabs list
     if ($('.more-tab-menu>li').length == 1) {
-        if ((LastTabWidth + LastTabPosition + threshold) < TabsWidth) {
+        if ((LastTabWidth + LastTabPosition - threshold) < TabsWidth) {
             movetoTabs();
         }
     }
-    if ((3 * LastTabWidth + LastTabPosition + threshold) < TabsWidth) {
+    if ((3 * LastTabWidth + LastTabPosition - threshold) < TabsWidth) {
         movetoTabs();
     }
     if ($('.more-tab-menu>li').length == 0) {
