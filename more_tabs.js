@@ -1,3 +1,8 @@
+
+if (typeof jQuery === 'undefined') {
+  throw new Error('More Tab requires jQuery')
+}
+
 function TabOverflow() {
     show($('.more-tab'));
 
@@ -11,8 +16,6 @@ function TabOverflow() {
         var LastTabWidth = 1;
         var LastTabPosition = 1;
     }
-
-    console.log(1.5 * LastTabWidth + " + " + LastTabPosition + " + " + threshold + " ?= " + TabsWidth);
 
     // If there is overflow lets move the overflowing tab to the more dropdown
     if ((1.5 * LastTabWidth + LastTabPosition + threshold) >= TabsWidth) {
@@ -54,22 +57,10 @@ function show(elem) {
     elem.removeClass('hide')
 }
 
-// iife to run on initial load
-(function($) {
+// invoke on window load
+$(window).bind("load", function() {
     TabOverflow();
-}());
+});
 
-
-// iife to check if screen has changed and if so trigger an event
-(function() {
-    var width = screen.width;
-    setInterval(function() {
-        if (screen.width !== width) {
-            width = screen.width;
-            $(window).trigger('widthchange');
-        }
-    }, 50);
-}());
-
-// execute the Taboverflow on window width change event
-$(window).bind('widthchange', TabOverflow);
+// call function if window is resized
+window.addEventListener("resize", TabOverflow);
